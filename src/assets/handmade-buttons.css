@@ -1,0 +1,287 @@
+.filters .crystal-button, .filters .level-tabs button {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(198, 174, 205, .65) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(202,231,239,.54) 38%, rgba(226,208,236,.55) 68%, rgba(244,218,166,.5)) !important;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.96), inset -1px -1px 0 rgba(177,151,190,.18), 0 3px 8px rgba(162,135,174,.14) !important;
+  color: #4a3b54 !important;
+  font-weight: 600 !important;
+}
+.filters .crystal-button::after, .filters .level-tabs button::after {
+  content: '';
+  position: absolute;
+  inset: 2px 48% 2px 5px;
+  border-radius: inherit;
+  background: linear-gradient(100deg, rgba(255,255,255,.76), transparent);
+  pointer-events: none;
+}
+.filters .crystal-button:hover, .filters .crystal-button.active, .filters .level-tabs button:hover, .filters .level-tabs button.active {
+  border-color: #b394c0 !important;
+  background: linear-gradient(135deg, #fffdf9, #c5e6ed 38%, #dec7e5 68%, #f1ce8d) !important;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.98), 0 4px 12px rgba(169,137,181,.3) !important;
+  color: #3e3048 !important;
+}
+.filters .level-tabs button {
+  font-size: .9rem !important;
+  padding: 10px 16px !important;
+}
+.filters .leather-button {
+  border-radius: 4px !important;
+  border-color: #96734f !important;
+  background: linear-gradient(145deg, #d7bf93, #b88959) !important;
+  box-shadow: inset 1px 1px 0 rgba(255,239,204,.46), inset -2px -2px 2px rgba(79,47,25,.25), 0 2px 3px rgba(75,51,32,.16) !important;
+  color: #56361f !important;
+  text-shadow: 0 1px rgba(255,235,195,.36) !important;
+}
+.filters .leather-button:hover, .filters .leather-button.active {
+  border-color: #5d3822 !important;
+  background: linear-gradient(145deg, #a77248, #704126) !important;
+  box-shadow: inset 1px 1px 0 rgba(249,210,158,.3), inset -2px -2px 3px rgba(51,28,14,.34), 0 3px 6px rgba(75,51,32,.26) !important;
+  color: #fff4df !important;
+  text-shadow: 0 1px rgba(49,27,14,.4) !important;
+}
+.card .card-top p {
+  font-size: .9rem !important;
+  color: #5f5b52 !important;
+  font-weight: 600 !important;
+}
+.card .description {
+  font-size: .94rem !important;
+  line-height: 1.75 !important;
+}
+.card .tags small {
+  position: relative;
+  border: 1px dashed #b59172;
+  background: #fffaf1;
+  color: #624b3a !important;
+  padding: 7px 11px !important;
+  font-size: .84rem !important;
+  font-weight: 600 !important;
+}
+.card .tags small::before, .card .tags small::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #b59172;
+  transform: translateY(-50%);
+}
+.card .tags small::before {
+  left: -2px;
+}
+.card .tags small::after {
+  right: -2px;
+}
+.card .leather-tags small {
+  border-style: solid;
+  border-color: #9a7454;
+  border-radius: 3px;
+  background: linear-gradient(145deg, #d8b48d, #b77f56);
+  box-shadow: inset 1px 1px 0 rgba(255,237,205,.42), inset -1px -1px 1px rgba(83,48,27,.25);
+  color: #472a18 !important;
+  text-shadow: 0 1px rgba(255,233,198,.35);
+}
+.card .leather-tags small::before, .card .leather-tags small::after {
+  display: none;
+}
+/* Handmade work cards use a portrait, Polaroid-inspired photo treatment. */
+.card.handmade-card .image-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  aspect-ratio: 4 / 5 !important;
+  overflow: visible !important;
+  padding: 8px 8px 39px !important;
+  background: #fffdf8 !important;
+  box-shadow: 0 8px 18px rgba(83, 64, 45, .13);
+  transform: rotate(-.7deg);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.card.handmade-card:nth-child(even) .image-wrap {
+  transform: rotate(.7deg);
+}
+.card.handmade-card .image-wrap img {
+  height: 100% !important;
+  object-fit: cover;
+}
+.card.handmade-card .image-wrap::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: -11px;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(117, 80, 51, .35);
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 27%, #fff8e9 0 9%, #e8b869 18%, #bd7840 60%, #7a4227 100%);
+  box-shadow: 0 3px 1px rgba(69, 40, 24, .32), 0 6px 10px rgba(69, 40, 24, .2), inset 1px 1px 2px rgba(255,255,255,.7);
+  transform: translateX(-50%);
+}
+.card.handmade-card .image-wrap::after {
+  content: attr(data-caption);
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  color: #806b59;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+.card.handmade-card:hover .image-wrap {
+  box-shadow: 0 12px 24px rgba(83, 64, 45, .19);
+  transform: translateY(-4px) rotate(-.7deg);
+}
+.card.handmade-card:nth-child(even):hover .image-wrap {
+  transform: translateY(-4px) rotate(.7deg);
+}
+/* Web projects are presented as compact browser windows. */
+.card.web-card .image-wrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden !important;
+  padding: 35px 7px 7px !important;
+  border: 1px solid #d9d4ca;
+  border-radius: 8px;
+  background: #f3f0ea !important;
+  box-shadow: 0 7px 16px rgba(50, 47, 39, .12);
+}
+.card.web-card .image-wrap::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 11px;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d98977;
+  box-shadow: 13px 0 #e5bd75, 26px 0 #91ad8b;
+}
+.card.web-card .image-wrap::after {
+  content: attr(data-url);
+  position: absolute;
+  top: 8px;
+  left: 58px;
+  right: 12px;
+  overflow: hidden;
+  color: #79756d;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .61rem;
+  letter-spacing: .02em;
+  line-height: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card.web-card .image-wrap img {
+  height: 100% !important;
+  object-fit: cover;
+}
+/* Draw the handmade filter divider one stitch at a time. */
+.filters::before {
+  transform: none !important;
+  clip-path: inset(0 100% 0 0);
+  animation: hand-stitch-line 11s linear infinite !important;
+}
+.filters::after {
+  content: '' !important;
+  position: absolute;
+  z-index: 4;
+  top: -2px;
+  left: -28px;
+  width: 28px;
+  height: 3px;
+  border: 0;
+  border-radius: 1px 0 0 1px;
+  clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+  background: radial-gradient(circle at 3px 50%, #4d4944 0 1px, #e7e3dc 1.2px 1.8px, transparent 2px), linear-gradient(90deg, #8b8780 0, #fbfaf6 43%, #aaa59f 75%, #625e58 100%);
+  box-shadow: 0 1px 1px rgba(78, 54, 35, .32);
+  transform: rotate(-24deg);
+  transform-origin: 100% 50%;
+  animation: hand-stitch-needle 11s ease-in-out infinite !important;
+}
+@keyframes hand-stitch-line {
+  0%,9% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  11% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 1;
+  }
+  74% {
+    clip-path: inset(0 6% 0 0);
+    opacity: 1;
+  }
+  82%,91% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+@keyframes hand-stitch-needle {
+  0%,7% {
+    left: -28px;
+    opacity: 0;
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  10% {
+    left: -28px;
+    opacity: 1;
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  18% {
+    left: calc(12.5% - 28px);
+    transform: translateY(5px) rotate(18deg);
+  }
+  26% {
+    left: calc(25% - 28px);
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  34% {
+    left: calc(37.5% - 28px);
+    transform: translateY(5px) rotate(18deg);
+  }
+  42% {
+    left: calc(50% - 28px);
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  50% {
+    left: calc(62.5% - 28px);
+    transform: translateY(5px) rotate(18deg);
+  }
+  58% {
+    left: calc(75% - 28px);
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  66% {
+    left: calc(87.5% - 28px);
+    transform: translateY(5px) rotate(18deg);
+  }
+  74%,82% {
+    left: calc(100% - 28px);
+    opacity: 1;
+    transform: translateY(-6px) rotate(-24deg);
+  }
+  100% {
+    left: calc(100% - 28px);
+    opacity: 0;
+    transform: translateY(-6px) rotate(-24deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .filters::before {
+    animation: none !important;
+    clip-path: none;
+  }
+  .filters::after {
+    display: none;
+  }
+}
