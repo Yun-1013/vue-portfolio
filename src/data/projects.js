@@ -32,18 +32,18 @@ export const projects = [{
   id: 'crystal-flower-beginner-01',
   type: 'handmade',
   category: 'crystal-flower',
-  level: 'beginner',
-  title: '春日小花',
+  level: 'junior',
+  title: '玫瑰花',
   year: '2026',
-  cover: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=85',
-  description: '水晶花初級課程作品，練習花瓣塑形與基礎配色。',
+  cover: '/src/img/flower/junior/junior-01-1.jpg',
+  description: '水晶花初級課程作品，粉紫色的玫瑰花。',
   tags: ['水晶花', '初級'],
-  materials: '金屬線、水晶膠、花藝膠帶'
+  materials: '花藝鐵絲、造花液、花藝膠帶'
 }, {
   id: 'crystal-flower-intermediate-01',
   type: 'handmade',
   category: 'crystal-flower',
-  level: 'intermediate',
+  level: 'senior',
   title: '紫藤花語',
   year: '2026',
   cover: 'https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1000&q=85',
@@ -54,7 +54,7 @@ export const projects = [{
   id: 'crystal-flower-jewelry-01',
   type: 'handmade',
   category: 'crystal-flower',
-  level: 'jewelry',
+  level: 'accessories',
   title: '花語耳飾',
   year: '2025',
   cover: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
@@ -76,10 +76,10 @@ export const crystalFlowerLevels = [{
   id: 'all',
   label: '全部作品'
 }, {
-  id: 'beginner',
+  id: 'junior',
   label: '初級'
 }, {
-  id: 'intermediate',
+  id: 'senior',
   label: '中級'
 }, {
   id: 'advanced',
@@ -94,10 +94,10 @@ export const crystalFlowerLevels = [{
   id: 'professor-training-1',
   label: '教授研習（一）'
 }, {
-  id: 'jewelry',
+  id: 'accessories',
   label: '飾品'
 }, {
-  id: 'sketching',
+  id: 'nature',
   label: '寫生'
 }, {
   id: 'daily-handmade',
