@@ -26,10 +26,11 @@ const showFallback = () => {
         <path d="M23 27v-5a9 9 0 0 1 18 0v5"/>
         <path d="M13 32h38"/>
       </svg>
-      <svg v-else viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M32 31c-12-17 9-25 8-6 8-18 24 1 7 8 18 7 1 24-8 7 1 19-20 15-8-7-17 12-25-10-7-8 17-26 8-8 5-19 25-8 18 6Z"/>
-        <circle cx="32" cy="32" r="5"/>
-      </svg>
+      <div v-else class="flower-fallback-art" aria-hidden="true">
+        <span class="flower-main">✿</span>
+        <span class="flower-small flower-small-left">✿</span>
+        <span class="flower-small flower-small-right">✿</span>
+      </div>
     </div>
   </div>
   <div class="card-top">
@@ -94,16 +95,40 @@ const showFallback = () => {
   color: #5c6065;
 }
 .fallback-flower {
-  background: #c9bfd2;
-  color: #70617c;
+  position: relative;
+  overflow: hidden;
+  background: #d5cbdc;
+  color: #766b80;
 }
-.fallback-flower svg {
-  fill: #8f7ca0;
-  stroke: #6d5c79;
+.flower-fallback-art {
+  position: absolute;
+  inset: 0;
+  font-family: 'Segoe UI Symbol','Noto Sans Symbols',sans-serif;
 }
-.fallback-flower circle {
-  fill: #f3e9f5;
-  stroke: none;
+.flower-fallback-art span {
+  position: absolute;
+  line-height: 1;
+  color: currentColor;
+}
+.flower-main {
+  top: 50%;
+  left: 50%;
+  font-size: clamp(4.75rem,9vw,6.4rem);
+  transform: translate(-50%,-55%);
+}
+.flower-small {
+  opacity: .62;
+}
+.flower-small-left {
+  bottom: 17%;
+  left: 20%;
+  font-size: clamp(1.8rem,3.8vw,2.65rem);
+}
+.flower-small-right {
+  top: 17%;
+  right: 17%;
+  font-size: clamp(1.55rem,3.2vw,2.2rem);
+  opacity: .56;
 }
 .fallback-leather {
   background: #c9b58a;
