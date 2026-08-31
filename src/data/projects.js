@@ -28,8 +28,9 @@ export const projects = [{
   tags: ['Vue', 'UI Design', 'CSS'],
   demoUrl: '#',
   githubUrl: '#'
-}, {
-  id: 'crystal-flower-beginner-01',
+},
+ {
+  id: 'crystal-flower-junior-01',
   type: 'handmade',
   category: 'crystal-flower',
   level: 'junior',
@@ -39,8 +40,9 @@ export const projects = [{
   description: '水晶花初級課程作品，粉紫色的玫瑰花。',
   tags: ['水晶花', '初級'],
   materials: '花藝鐵絲、造花液、花藝膠帶'
-}, {
-  id: 'crystal-flower-intermediate-01',
+}, 
+{
+  id: 'crystal-flower-senior-01',
   type: 'handmade',
   category: 'crystal-flower',
   level: 'senior',
@@ -51,13 +53,13 @@ export const projects = [{
   tags: ['水晶花', '中級'],
   materials: '金屬線、水晶膠、花藝膠帶'
 }, {
-  id: 'crystal-flower-jewelry-01',
+  id: 'crystal-flower-accessories-01',
   type: 'handmade',
   category: 'crystal-flower',
   level: 'accessories',
   title: '花語耳飾',
   year: '2025',
-  cover: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=85',
+  cover: '/src/img/flower/accessories/accessories-01-1.jpg',
   description: '將水晶花縮小成日常可配戴的輕盈飾品。',
   tags: ['水晶花', '飾品'],
   materials: '金屬線、水晶膠、耳針配件'
@@ -67,7 +69,7 @@ export const projects = [{
   category: 'leather',
   title: '植鞣皮卡套',
   year: '2026',
-  cover: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=85',
+  cover: 'http://localhost:5173/vue-portfolio/src/img/leather/card-holder-01-1.jpg',
   description: '以手縫與邊油處理完成的簡約卡套，會隨使用時間留下獨特光澤。',
   tags: ['皮件', '植鞣皮'],
   materials: '植鞣皮、蠟線、邊油'
