@@ -1,23 +1,50 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import '../assets/handmade-buttons.css';
 import ProjectCard from '../components/ProjectCard.vue';
 import { crystalFlowerLevels, projects } from '../data/projects';
 const props = defineProps({
   type: String
 });
+const route = useRoute();
+const router = useRouter();
 const isWeb = computed(() => props.type === 'web');
-const handmadeCategory = ref('crystal-flower');
-const crystalFlowerLevel = ref('all');
+const handmadeCategories = ['crystal-flower', 'leather', 'fabric'];
+const getHandmadeCategory = category => handmadeCategories.includes(category) ? category : 'crystal-flower';
+const getCrystalFlowerLevel = level => crystalFlowerLevels.some(item => item.id === level) ? level : 'all';
+const handmadeCategory = ref(getHandmadeCategory(route.query.category));
+const crystalFlowerLevel = ref(handmadeCategory.value === 'crystal-flower' ? getCrystalFlowerLevel(route.query.level) : 'all');
 const displayedProjects = computed(() => {
   if (isWeb.value) return projects.filter(project => project.type === 'web');
-  return projects.filter(project => project.type === 'handmade' && project.category === handmadeCategory.value && (handmadeCategory.value === 'leather' || crystalFlowerLevel.value === 'all' || project.level === crystalFlowerLevel.value));
+  return projects.filter(project => project.type === 'handmade' && project.category === handmadeCategory.value && (handmadeCategory.value !== 'crystal-flower' || crystalFlowerLevel.value === 'all' || project.level === crystalFlowerLevel.value));
 });
 const selectCategory = category => {
   handmadeCategory.value = category;
   crystalFlowerLevel.value = 'all';
+  router.replace({
+    path: '/handmade',
+    query: { category }
+  });
 };
-watch(() => props.type, () => selectCategory('crystal-flower'));
+const selectCrystalFlowerLevel = level => {
+  crystalFlowerLevel.value = level;
+  router.replace({
+    path: '/handmade',
+    query: {
+      category: 'crystal-flower',
+      ...(level === 'all' ? {} : { level })
+    }
+  });
+};
+watch(() => props.type, () => {
+  if (!isWeb.value) selectCategory('crystal-flower');
+});
+watch(() => [route.query.category, route.query.level], ([category, level]) => {
+  const nextCategory = getHandmadeCategory(category);
+  handmadeCategory.value = nextCategory;
+  crystalFlowerLevel.value = nextCategory === 'crystal-flower' ? getCrystalFlowerLevel(level) : 'all';
+});
 watch(handmadeCategory, category => {
   window.dispatchEvent(new CustomEvent('handmade-category-change', {
     detail: category
@@ -68,9 +95,12 @@ onMounted(() => {
       <button class="leather-button" :class="{ active: handmadeCategory === 'leather' }" @click="selectCategory('leather')">
         皮件
       </button>
+      <button class="fabric-button" :class="{ active: handmadeCategory === 'fabric' }" @click="selectCategory('fabric')">
+        布製品
+      </button>
     </div>
     <div v-if="handmadeCategory === 'crystal-flower'" class="level-tabs" aria-label="水晶花分類">
-      <button v-for="level in crystalFlowerLevels" :key="level.id" :class="{ active: crystalFlowerLevel === level.id }" @click="crystalFlowerLevel = level.id">
+      <button v-for="level in crystalFlowerLevels" :key="level.id" :class="{ active: crystalFlowerLevel === level.id }" @click="selectCrystalFlowerLevel(level.id)">
         {{ level.label }}
       </button>
     </div>
