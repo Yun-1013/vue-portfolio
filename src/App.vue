@@ -78,7 +78,7 @@ onMounted(() => {
   updateVineProgress();
   introTimer = window.setTimeout(() => {
     showNotebookIntro.value = false;
-  }, reduceMotion ? 80 : 4000);
+  }, reduceMotion ? 80 : 3000);
 });
 onBeforeUnmount(() => {
   window.removeEventListener('pointermove', createLightFragment);
@@ -593,7 +593,7 @@ const skipNotebookIntro = () => {
   border-radius: 3px 9px 9px 3px;
   background: linear-gradient(115deg,#e4d6ba 0%,#decfb1 30%,#d6c4a4 55%,#eadcc2 100%);
   box-shadow: inset 8px 0 12px rgba(91,57,22,.18),inset -9px 0 14px rgba(255,250,232,.3),3px 5px 6px rgba(65,41,18,.2);
-  animation: open-cover 3.75s cubic-bezier(.2,.78,.18,1) forwards;
+  animation: open-cover 2.75s cubic-bezier(.2,.78,.18,1) forwards;
 }
 .notebook-cover::before {
   content: '';
@@ -663,7 +663,7 @@ const skipNotebookIntro = () => {
   top: calc(100% - 3px);
   background: #9a4f3e;
   clip-path: polygon(0 0,100% 0,100% 100%,50% 84%,0 100%);
-  animation: bookmark-settle 3.75s ease-out forwards;
+  animation: bookmark-settle 2.75s ease-out forwards;
 }
 .skip-intro {
   position: absolute;

@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import DetailImageCarousel from '../components/DetailImageCarousel.vue';
 import { findProject } from '../data/projects';
 const props = defineProps({
   id: String
@@ -27,15 +28,7 @@ const project = computed(() => findProject(props.id));
       </span>
     </div>
   </div>
-  <div class="detail-gallery">
-    <img
-      v-for="(image, index) in project.images"
-      :key="image"
-      class="cover"
-      :src="image"
-      :alt="`${project.title}－作品圖 ${index + 1}`"
-    >
-  </div>
+  <DetailImageCarousel :images="project.images" :title="project.title" />
   <div class="info">
     <h2>
       作品介紹
@@ -117,18 +110,9 @@ h1 {
   padding: 7px 10px;
   color: var(--muted);
 }
-.detail-gallery {
-  display: grid;
-  gap: clamp(14px,2vw,24px);
-}
-.cover {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 .info {
   max-width: 600px;
-  margin: 70px auto 0;
+  margin: clamp(36px,5vw,56px) auto 0;
 }
 .info h2 {
   font-family: var(--serif);
