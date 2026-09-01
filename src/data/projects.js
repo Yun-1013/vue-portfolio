@@ -1,3 +1,20 @@
+// 將 src/img 內的圖片交由 Vite 自動載入與打包。
+// 新增作品時只需要填寫 imagePaths，不必逐張 import 圖片。
+const localImages = import.meta.glob('../img/**/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default'
+});
+
+const getLocalImage = imagePath => {
+  const image = localImages[`../img/${imagePath}`];
+
+  if (!image) {
+    console.warn(`找不到作品圖片：${imagePath}`);
+  }
+
+  return image;
+};
+
 export const projects = [{
   id: 'cafe-landing',
   type: 'web',
@@ -36,7 +53,10 @@ export const projects = [{
   level: 'junior',
   title: '玫瑰花',
   year: '2026',
-  cover: '/src/img/flower/junior/junior-01-1.jpg',
+  imagePaths: [
+    'flower/junior/junior-01-1.jpg',
+    'flower/junior/junior-01-2.jpg'
+  ],
   description: '水晶花初級課程作品，粉紫色的玫瑰花。',
   tags: ['水晶花', '初級'],
   materials: '花藝鐵絲、造花液、花藝膠帶'
@@ -59,7 +79,9 @@ export const projects = [{
   level: 'accessories',
   title: '花語耳飾',
   year: '2025',
-  cover: '/src/img/flower/accessories/accessories-01-1.jpg',
+  imagePaths: [
+    'flower/accessories/accessories-01-1.jpg'
+  ],
   description: '將水晶花縮小成日常可配戴的輕盈飾品。',
   tags: ['水晶花', '飾品'],
   materials: '金屬線、水晶膠、耳針配件'
@@ -69,11 +91,23 @@ export const projects = [{
   category: 'leather',
   title: '植鞣皮卡套',
   year: '2026',
-  cover: 'http://localhost:5173/vue-portfolio/src/img/leather/card-holder-01-1.jpg',
+  imagePaths: [
+    'leather/card-holder-01-1.jpg'
+  ],
   description: '以手縫與邊油處理完成的簡約卡套，會隨使用時間留下獨特光澤。',
   tags: ['皮件', '植鞣皮'],
   materials: '植鞣皮、蠟線、邊油'
-}];
+}].map(project => {
+  // imagePaths 的第一張是卡片封面；詳細頁會使用全部圖片。
+  const images = (project.imagePaths ?? []).map(getLocalImage).filter(Boolean);
+  const fallbackImages = project.cover ? [project.cover] : [];
+
+  return {
+    ...project,
+    cover: images[0] ?? project.cover,
+    images: images.length ? images : fallbackImages
+  };
+});
 export const crystalFlowerLevels = [{
   id: 'all',
   label: '全部作品'
