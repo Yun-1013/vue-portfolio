@@ -184,17 +184,87 @@ export const projects = [{
   demoUrl: '#',
   githubUrl: '#'
 }, ...crystalFlowerProjects, {
-  id: 'leather-card-holder-01',
+  id: 'leather-01',
   type: 'handmade',
   category: 'leather',
   title: '植鞣皮卡套',
   year: '2026',
   imagePaths: [
-    'leather/card-holder-01-1.jpg'
+    'leather/leather-01-1.jpg'
   ],
   description: '以手縫與邊油處理完成的簡約卡套，會隨使用時間留下獨特光澤。',
   tags: ['皮件', '植鞣皮'],
   materials: '植鞣皮、蠟線、邊油'
+}, {
+  id: 'leather-02',
+  type: 'handmade',
+  category: 'leather',
+  title: '皮件 02',
+  year: '',
+  imagePaths: ['leather/leather-02-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['皮件'],
+  materials: ''
+}, {
+  id: 'leather-03',
+  type: 'handmade',
+  category: 'leather',
+  title: '皮件 03',
+  year: '',
+  imagePaths: ['leather/leather-03-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['皮件'],
+  materials: ''
+}, {
+  id: 'leather-04',
+  type: 'handmade',
+  category: 'leather',
+  title: '皮件 04',
+  year: '',
+  imagePaths: ['leather/leather-04-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['皮件'],
+  materials: ''
+}, {
+  id: 'fabric-01',
+  type: 'handmade',
+  category: 'fabric',
+  title: '布製品 01',
+  year: '',
+  imagePaths: ['fabric/fabric-01-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['布製品'],
+  materials: ''
+}, {
+  id: 'fabric-02',
+  type: 'handmade',
+  category: 'fabric',
+  title: '布製品 02',
+  year: '',
+  imagePaths: ['fabric/fabric-02-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['布製品'],
+  materials: ''
+}, {
+  id: 'fabric-03',
+  type: 'handmade',
+  category: 'fabric',
+  title: '布製品 03',
+  year: '',
+  imagePaths: ['fabric/fabric-03-1.jpg'],
+  description: '作品介紹待補',
+  tags: ['布製品'],
+  materials: ''
+}, {
+  id: 'fabric-04',
+  type: 'handmade',
+  category: 'fabric',
+  title: '布製品 04',
+  year: '',
+  imagePaths: ['fabric/fabric-04-1.jpg', 'fabric/fabric-04-2.jpg'],
+  description: '作品介紹待補',
+  tags: ['布製品'],
+  materials: ''
 }].map(project => {
   // imagePaths 的第一張是卡片封面；詳細頁會使用全部圖片。
   const images = (project.imagePaths ?? []).map(getLocalImage).filter(Boolean);

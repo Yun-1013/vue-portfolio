@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 const props = defineProps({
   project: {
     type: Object,
@@ -10,10 +10,17 @@ const imageFailed = ref(!props.project.cover);
 const showFallback = () => {
   imageFailed.value = true;
 };
+const detailRoute = computed(() => ({
+  path: `/projects/${props.project.id}`,
+  query: props.project.type === 'handmade' ? {
+    category: props.project.category,
+    ...(props.project.category === 'crystal-flower' && props.project.level ? { level: props.project.level } : {})
+  } : {}
+}));
 </script>
 
 <template>
-<RouterLink :to="`/projects/${project.id}`" class="card" :class="{ 'handmade-card': project.type === 'handmade', 'web-card': project.type === 'web' }">
+<RouterLink :to="detailRoute" class="card" :class="{ 'handmade-card': project.type === 'handmade', 'web-card': project.type === 'web' }">
   <div class="image-wrap" :data-caption="project.type === 'handmade' ? `HANDMADE · ${project.year}` : null" :data-url="project.type === 'web' ? `portfolio.local / ${project.id}` : null">
     <img v-if="!imageFailed" :src="project.cover" :alt="project.title" @error="showFallback">
     <div v-else class="image-fallback" :class="project.type === 'web' ? 'fallback-web' : project.category === 'leather' ? 'fallback-leather' : 'fallback-flower'" role="img" :aria-label="`${project.title} 預設圖片`">

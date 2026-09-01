@@ -3,6 +3,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { RouterView, useRoute } from 'vue-router';
 import SiteHeader from './components/SiteHeader.vue';
 import SiteFooter from './components/SiteFooter.vue';
+import { findProject } from './data/projects';
 const lightFragments = ref([]);
 const showNotebookIntro = ref(true);
 const showVineTop = ref(false);
@@ -12,8 +13,11 @@ const handmadeCategory = ref('crystal-flower');
 const route = useRoute();
 const isHome = computed(() => route.path === '/');
 const isWebProjects = computed(() => route.path === '/web-projects');
-const isHandmadeProjects = computed(() => route.path === '/handmade');
-const isLeatherHandmade = computed(() => handmadeCategory.value === 'leather');
+const detailProject = computed(() => route.path.startsWith('/projects/') ? findProject(route.params.id) : null);
+const isHandmadeProjects = computed(() => route.path === '/handmade' || detailProject.value?.type === 'handmade');
+const activeHandmadeCategory = computed(() => detailProject.value?.category ?? handmadeCategory.value);
+const isLeatherHandmade = computed(() => activeHandmadeCategory.value === 'leather');
+const isFabricHandmade = computed(() => activeHandmadeCategory.value === 'fabric');
 let fragmentId = 0;
 let lastFragmentAt = 0;
 let reduceMotion = false;
@@ -54,7 +58,7 @@ const scrollToTop = () => {
   });
 };
 const updateHandmadeCategory = event => {
-  handmadeCategory.value = event.detail === 'leather' ? 'leather' : 'crystal-flower';
+  handmadeCategory.value = ['leather', 'fabric'].includes(event.detail) ? event.detail : 'crystal-flower';
 };
 const leafStyle = threshold => {
   const visibility = Math.min(Math.max((vineProgress.value - threshold) * 3.2, 0), 1);
@@ -184,7 +188,7 @@ const skipNotebookIntro = () => {
   </button>
   <button
       v-else-if="showVineTop && isHandmadeProjects"
-      :class="['material-dot-top-button', { 'leather-dots': isLeatherHandmade }]"
+      :class="['material-dot-top-button', { 'leather-dots': isLeatherHandmade, 'fabric-dots': isFabricHandmade }]"
       type="button"
       aria-label="回到頁面頂端"
       title="回到頂端"
@@ -344,6 +348,22 @@ const skipNotebookIntro = () => {
 }
 .leather-dots .dot-two,.leather-dots .dot-four {
   fill: #9b633e;
+}
+.fabric-dots {
+  color: #bb8279;
+  filter: drop-shadow(0 3px 4px rgba(133,83,77,.16));
+}
+.fabric-dots .material-dot {
+  fill: #e6bbb2;
+  stroke: #bb8279;
+  stroke-width: 1.45;
+  filter: drop-shadow(1px 2px 1px rgba(125,73,69,.16));
+}
+.fabric-dots .dot-one,.fabric-dots .dot-three,.fabric-dots .dot-five {
+  fill: #e6bbb2;
+}
+.fabric-dots .dot-two,.fabric-dots .dot-four {
+  fill: #f2d8d1;
 }
 .pixel-top-button span,.material-dot-top-button span {
   margin-top: -13px;
