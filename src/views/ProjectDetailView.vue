@@ -27,7 +27,15 @@ const project = computed(() => findProject(props.id));
       </span>
     </div>
   </div>
-  <img class="cover" :src="project.cover" :alt="project.title">
+  <div class="detail-gallery">
+    <img
+      v-for="(image, index) in project.images"
+      :key="image"
+      class="cover"
+      :src="image"
+      :alt="`${project.title}－作品圖 ${index + 1}`"
+    >
+  </div>
   <div class="info">
     <h2>
       作品介紹
@@ -108,6 +116,10 @@ h1 {
   background: var(--sand);
   padding: 7px 10px;
   color: var(--muted);
+}
+.detail-gallery {
+  display: grid;
+  gap: 18px;
 }
 .cover {
   width: 100%;
