@@ -24,6 +24,8 @@ const crystalFlowerLevelLabels = {
   'professor-training-1': '教授研習（一）',
   accessories: '飾品',
   nature: '寫生',
+  'potted-flowers': '盆花',
+  otherclass: '其他單品',
   'daily-handmade': '日常手作'
 };
 
@@ -45,7 +47,7 @@ const crystalFlowerDrafts = [
   { level: 'junior', number: '10', title: '初級作品 10', year: '', description: '作品介紹待補', materials: '' },
   { level: 'junior', number: '11', title: '初級作品 11', year: '', description: '作品介紹待補', materials: '' },
   { level: 'junior', number: '12', title: '初級作品 12', year: '', description: '作品介紹待補', materials: '' },
-  { level: 'senior', number: '01', title: '紫藤花語', year: '2026', description: '水晶花中級作品，嘗試以層次堆疊表現花串的自然垂墜感。', materials: '金屬線、水晶膠、花藝膠帶' },
+  { level: 'senior', number: '01', title: '紫藤花語', year: '2026', description: '水晶花中級作品，嘗試以層次堆疊表現花串的自然垂墜感。', materials: '花藝鐵絲、造花液、花藝膠帶' },
   { level: 'senior', number: '02', title: '中級作品 02', year: '', description: '作品介紹待補', materials: '' },
   { level: 'senior', number: '03', title: '中級作品 03', year: '', description: '作品介紹待補', materials: '' },
   { level: 'senior', number: '04', title: '中級作品 04', year: '', description: '作品介紹待補', materials: '' },
@@ -137,7 +139,9 @@ const crystalFlowerDrafts = [
   { level: 'nature', number: '10', title: '寫生作品 10', year: '', description: '作品介紹待補', materials: '' },
   { level: 'nature', number: '11', title: '寫生作品 11', year: '', description: '作品介紹待補', materials: '' },
   { level: 'nature', number: '12', title: '寫生作品 12', year: '', description: '作品介紹待補', materials: '' },
-  { level: 'daily-handmade', imageFolder: 'otherclass', imagePrefix: 'otherclass', number: '01', title: '日常手作 01', year: '', description: '作品介紹待補', materials: '' }
+  { level: 'potted-flowers', number: '01', title: '盆花作品 01', year: '', description: '作品介紹待補', materials: '' },
+  { level: 'potted-flowers', number: '02', title: '盆花作品 02', year: '', description: '作品介紹待補', materials: '' },
+  { level: 'otherclass', number: '01', title: ' 重瓣洋桔梗 ', year: '', description: '作品介紹待補', materials: '花藝鐵絲、造花液、花藝膠帶' }
 ];
 
 const crystalFlowerProjects = crystalFlowerDrafts.map(project => ({
@@ -187,14 +191,14 @@ export const projects = [{
   id: 'leather-01',
   type: 'handmade',
   category: 'leather',
-  title: '植鞣皮卡套',
+  title: '小馬鞍手提包',
   year: '2026',
   imagePaths: [
     'leather/leather-01-1.jpg'
   ],
   description: '以手縫與邊油處理完成的簡約卡套，會隨使用時間留下獨特光澤。',
-  tags: ['皮件', '植鞣皮'],
-  materials: '植鞣皮、蠟線、邊油'
+  tags: ['皮件', '鉻鞣皮'],
+  materials: '鉻鞣皮、蠟線、邊油'
 }, {
   id: 'leather-02',
   type: 'handmade',
@@ -203,7 +207,7 @@ export const projects = [{
   year: '',
   imagePaths: ['leather/leather-02-1.jpg'],
   description: '作品介紹待補',
-  tags: ['皮件'],
+  tags: ['皮件', '鉻鞣皮'],
   materials: ''
 }, {
   id: 'leather-03',
@@ -213,7 +217,7 @@ export const projects = [{
   year: '',
   imagePaths: ['leather/leather-03-1.jpg'],
   description: '作品介紹待補',
-  tags: ['皮件'],
+  tags: ['皮件', '鉻鞣皮'],
   materials: ''
 }, {
   id: 'leather-04',
@@ -223,7 +227,7 @@ export const projects = [{
   year: '',
   imagePaths: ['leather/leather-04-1.jpg'],
   description: '作品介紹待補',
-  tags: ['皮件'],
+  tags: ['皮件', '鉻鞣皮'],
   materials: ''
 }, {
   id: 'fabric-01',
@@ -303,6 +307,9 @@ export const crystalFlowerLevels = [{
 }, {
   id: 'nature',
   label: '寫生'
+}, {
+  id: 'potted-flowers',
+  label: '盆花'
 },{
   id: 'otherclass',
   label: '其他單品'
@@ -310,4 +317,26 @@ export const crystalFlowerLevels = [{
   id: 'daily-handmade',
   label: '日常手作區'
 }];
+export const leatherTypes = [{
+  id: 'all',
+  label: '全部作品'
+}, {
+  id: 'vegetable-tanned',
+  label: '植鞣皮',
+  tag: '植鞣皮'
+}, {
+  id: 'chrome-tanned',
+  label: '鉻鞣皮',
+  tag: '鉻鞣皮'
+}];
+// 首頁手作精選固定交錯三種分類，新增作品時不會因資料排序而改變首頁呈現。
+export const handmadeFeaturedProjectIds = [
+  'crystal-flower-junior-01',
+  'leather-01',
+  'fabric-01',
+  'crystal-flower-senior-01',
+  'leather-02',
+  'fabric-02'
+];
+
 export const findProject = id => projects.find(project => project.id === id);

@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { leatherTypes } from '../data/projects';
 const props = defineProps({
   project: {
     type: Object,
@@ -10,11 +11,17 @@ const imageFailed = ref(!props.project.cover);
 const showFallback = () => {
   imageFailed.value = true;
 };
+const leatherTypeId = computed(() => leatherTypes.find(type => props.project.tags?.includes(type.tag))?.id);
+const getTagClass = tag => ({
+  'crystal-category-tag': props.project.category === 'crystal-flower' && tag === '水晶花',
+  'crystal-subcategory-tag': props.project.category === 'crystal-flower' && tag !== '水晶花'
+});
 const detailRoute = computed(() => ({
   path: `/projects/${props.project.id}`,
   query: props.project.type === 'handmade' ? {
     category: props.project.category,
-    ...(props.project.category === 'crystal-flower' && props.project.level ? { level: props.project.level } : {})
+    ...(props.project.category === 'crystal-flower' && props.project.level ? { level: props.project.level } : {}),
+    ...(props.project.category === 'leather' && leatherTypeId.value ? { leatherType: leatherTypeId.value } : {})
   } : {}
 }));
 </script>
@@ -54,8 +61,16 @@ const detailRoute = computed(() => ({
   <p class="description">
     {{ project.description }}
   </p>
-  <div class="tags" :class="{ 'leather-tags': project.category === 'leather' }">
-    <small v-for="tag in project.tags" :key="tag">
+  <div class="tags" :class="[
+    {
+      'leather-tags': project.category === 'leather',
+      'fabric-tags': project.category === 'fabric',
+      'crystal-tags': project.category === 'crystal-flower'
+    },
+    project.category === 'crystal-flower' ? `crystal-level-${project.level}` : '',
+    project.category === 'leather' && leatherTypeId ? `leather-type-${leatherTypeId}` : ''
+  ]">
+    <small v-for="tag in project.tags" :key="tag" :class="getTagClass(tag)" :data-level="project.category === 'crystal-flower' && tag !== '水晶花' ? project.level : null">
       {{ tag }}
     </small>
   </div>

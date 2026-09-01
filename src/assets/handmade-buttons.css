@@ -41,6 +41,47 @@
   color: #fff4df !important;
   text-shadow: 0 1px rgba(49,27,14,.4) !important;
 }
+.filters .leather-type-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.filters .leather-type-tabs button {
+  border: 1px solid #96734f;
+  border-radius: 4px;
+  background: linear-gradient(145deg, #dbc49a, #bd8f61);
+  box-shadow: inset 1px 1px 0 rgba(255,239,204,.48), inset -2px -2px 2px rgba(79,47,25,.22), 0 2px 3px rgba(75,51,32,.13);
+  color: #56361f;
+  text-shadow: 0 1px rgba(255,235,195,.36);
+  font-size: .9rem;
+  padding: 10px 16px;
+}
+.filters .leather-type-tabs .leather-type-vegetable-tanned {
+  border-color: #a77a4c;
+  background: linear-gradient(145deg, #e0c493, #bd8551);
+  color: #5d371b;
+}
+.filters .leather-type-tabs .leather-type-chrome-tanned {
+  border-color: #728f82;
+  background: linear-gradient(145deg, #c7d8cf, #91aa9e);
+  box-shadow: inset 1px 1px 0 rgba(244,255,248,.48), inset -2px -2px 2px rgba(49,76,63,.2), 0 2px 3px rgba(55,80,68,.13);
+  color: #365548;
+  text-shadow: 0 1px rgba(245,255,248,.38);
+}
+.filters .leather-type-tabs button:hover, .filters .leather-type-tabs button.active {
+  border-color: #5d3822;
+  background: linear-gradient(145deg, #a77248, #704126);
+  box-shadow: inset 1px 1px 0 rgba(249,210,158,.3), inset -2px -2px 3px rgba(51,28,14,.34), 0 3px 6px rgba(75,51,32,.26);
+  color: #fff4df;
+  text-shadow: 0 1px rgba(49,27,14,.4);
+}
+.filters .leather-type-tabs .leather-type-chrome-tanned:hover, .filters .leather-type-tabs .leather-type-chrome-tanned.active {
+  border-color: #456558;
+  background: linear-gradient(145deg, #718f82, #456457);
+  box-shadow: inset 1px 1px 0 rgba(222,242,231,.28), inset -2px -2px 3px rgba(37,64,52,.3), 0 3px 6px rgba(47,74,62,.24);
+  color: #f1faf4;
+  text-shadow: 0 1px rgba(31,56,45,.42);
+}
 /* Fabric category: a sewn woven-label finish with visible thread and a small button. */
 .filters .fabric-button {
   position: relative;
@@ -129,6 +170,83 @@
 .card .leather-tags small::before, .card .leather-tags small::after {
   display: none;
 }
+.card .leather-tags small:nth-child(2) {
+  border-radius: 4px;
+  border-color: var(--leather-border, #96734f);
+  background: var(--leather-surface, linear-gradient(145deg, #dbc49a, #bd8f61));
+  box-shadow: var(--leather-shadow, inset 1px 1px 0 rgba(255,239,204,.48), inset -2px -2px 2px rgba(79,47,25,.22));
+  color: var(--leather-text, #56361f) !important;
+  text-shadow: var(--leather-text-shadow, 0 1px rgba(255,235,195,.36));
+}
+.card .leather-tags small:nth-child(2)::after {
+  display: none;
+}
+.card .leather-type-vegetable-tanned { --leather-border: #a77a4c; --leather-surface: linear-gradient(145deg, #e0c493, #bd8551); --leather-text: #5d371b; }
+.card .leather-type-chrome-tanned { --leather-border: #728f82; --leather-surface: linear-gradient(145deg, #c7d8cf, #91aa9e); --leather-text: #365548; --leather-shadow: inset 1px 1px 0 rgba(244,255,248,.48), inset -2px -2px 2px rgba(49,76,63,.2); --leather-text-shadow: 0 1px rgba(245,255,248,.38); }
+.card .fabric-tags small {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #ad7b73;
+  border-radius: 4px 6px 5px 4px;
+  background: repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 1px,transparent 1px 4px),#efcfc7;
+  box-shadow: inset 0 1px 0 rgba(255,248,240,.55),0 1px 2px rgba(121,73,65,.08);
+  color: #653f3c !important;
+  text-shadow: 0 1px rgba(255,245,236,.5);
+}
+.card .fabric-tags small::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  width: auto;
+  height: auto;
+  border: 1px dashed rgba(112,65,61,.48);
+  border-radius: 2px 4px 3px 3px;
+  background: transparent;
+  transform: none;
+}
+.card .fabric-tags small::after {
+  display: none;
+}
+.card .crystal-tags .crystal-category-tag {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(151,185,202,.75);
+  border-radius: 999px;
+  background: linear-gradient(135deg,rgba(255,255,255,.96),rgba(202,231,239,.64) 48%,rgba(226,208,236,.62));
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.86),0 1px 2px rgba(91,119,135,.12);
+  color: #475467 !important;
+  text-shadow: 0 1px rgba(255,255,255,.62);
+}
+.card .crystal-tags .crystal-category-tag::before {
+  display: none;
+}
+.card .crystal-tags .crystal-category-tag::after {
+  display: none;
+}
+.card .crystal-tags .crystal-subcategory-tag {
+  border-radius: 5px;
+  border-color: var(--crystal-border, #c8dce6);
+  background: var(--crystal-surface, #f4f9fb);
+  box-shadow: inset 2px 0 0 var(--crystal-tone, #86a8b8), inset 1px 1px 0 rgba(255,255,255,.7);
+  color: var(--crystal-text, #536c7a) !important;
+}
+.card .crystal-tags .crystal-subcategory-tag::before,
+.card .crystal-tags .crystal-subcategory-tag::after {
+  display: none;
+}
+.card .crystal-level-junior { --crystal-tone: #c992a0; --crystal-border: #edc7d0; --crystal-surface: #fff4f6; --crystal-text: #795864; }
+.card .crystal-level-senior { --crystal-tone: #a289bc; --crystal-border: #d8cae9; --crystal-surface: #faf6ff; --crystal-text: #6d5c7e; }
+.card .crystal-level-advanced { --crystal-tone: #759db3; --crystal-border: #c2ddea; --crystal-surface: #f2f9fc; --crystal-text: #4f6f80; }
+.card .crystal-level-instructor { --crystal-tone: #ad8a54; --crystal-border: #ead8af; --crystal-surface: #fffaf0; --crystal-text: #79623d; }
+.card .crystal-level-associate-professor { --crystal-tone: #a27d96; --crystal-border: #e7c6d7; --crystal-surface: #fff6fb; --crystal-text: #76566d; }
+.card .crystal-level-professor-training-1 { --crystal-tone: #638f94; --crystal-border: #b9dddd; --crystal-surface: #f1fbfb; --crystal-text: #456e72; }
+.card .crystal-level-accessories { --crystal-tone: #bb8a68; --crystal-border: #efd0ba; --crystal-surface: #fff8f2; --crystal-text: #805f48; }
+.card .crystal-level-nature { --crystal-tone: #7e9a85; --crystal-border: #c7ddca; --crystal-surface: #f4faf4; --crystal-text: #587260; }
+.card .crystal-level-potted-flowers { --crystal-tone: #b37c78; --crystal-border: #e5c4c1; --crystal-surface: #fff6f4; --crystal-text: #7c5552; }
+.card .crystal-level-daily-handmade { --crystal-tone: #938777; --crystal-border: #ddd7ca; --crystal-surface: #fbfaf7; --crystal-text: #6f665c; }
+.card .crystal-level-otherclass { --crystal-tone: #7f93a2; --crystal-border: #cbd8df; --crystal-surface: #f5f8fa; --crystal-text: #5f727f; }
 /* Handmade work cards use a portrait, Polaroid-inspired photo treatment. */
 .card.handmade-card .image-wrap {
   position: relative;

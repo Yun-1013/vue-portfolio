@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import DetailImageCarousel from '../components/DetailImageCarousel.vue';
-import { findProject, projects } from '../data/projects';
+import { findProject, leatherTypes, projects } from '../data/projects';
 const props = defineProps({
   id: String
 });
@@ -14,7 +14,8 @@ const relatedProjects = computed(() => {
   return projects.filter(candidate => candidate.type === project.value.type && (
     candidate.type === 'web' || (
       candidate.category === project.value.category &&
-      (candidate.category !== 'crystal-flower' || !route.query.level || candidate.level === route.query.level)
+      (candidate.category !== 'crystal-flower' || !route.query.level || candidate.level === route.query.level) &&
+      (candidate.category !== 'leather' || !route.query.leatherType || candidate.tags.includes(leatherTypes.find(type => type.id === route.query.leatherType)?.tag))
     )
   ));
 });
@@ -56,7 +57,8 @@ const backToListRoute = computed(() => {
     path: '/handmade',
     query: {
       category: project.value?.category,
-      ...(project.value?.category === 'crystal-flower' && project.value.level ? { level: project.value.level } : {})
+      ...(project.value?.category === 'crystal-flower' && project.value.level ? { level: project.value.level } : {}),
+      ...(project.value?.category === 'leather' && leatherTypes.find(type => project.value.tags.includes(type.tag))?.id ? { leatherType: leatherTypes.find(type => project.value.tags.includes(type.tag)).id } : {})
     }
   };
 });
