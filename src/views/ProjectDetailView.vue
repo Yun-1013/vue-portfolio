@@ -119,12 +119,12 @@ h1 {
 }
 .detail-gallery {
   display: grid;
-  gap: 18px;
+  gap: clamp(14px,2vw,24px);
 }
 .cover {
+  display: block;
   width: 100%;
-  height: min(58vw,620px);
-  object-fit: cover;
+  height: auto;
 }
 .info {
   max-width: 600px;
@@ -172,9 +172,6 @@ h1 {
   }
   .tags {
     margin-top: 20px;
-  }
-  .cover {
-    height: 100vw;
   }
   .info {
     margin-top: 45px;

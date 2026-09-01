@@ -54,8 +54,7 @@ export const projects = [{
   title: '玫瑰花',
   year: '2026',
   imagePaths: [
-    'flower/junior/junior-01-1.jpg',
-    'flower/junior/junior-01-2.jpg'
+    'flower/junior/junior-01-1.jpg'
   ],
   description: '水晶花初級課程作品，粉紫色的玫瑰花。',
   tags: ['水晶花', '初級'],
