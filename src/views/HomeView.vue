@@ -1,8 +1,10 @@
 <script setup>
 import FeaturedCarousel from '../components/FeaturedCarousel.vue';
-import { projects } from '../data/projects';
+import { handmadeFeaturedProjectIds, projects } from '../data/projects';
 const webFeatured = projects.filter(project => project.type === 'web').slice(0, 6);
-const handmadeFeatured = projects.filter(project => project.type === 'handmade').slice(0, 6);
+const handmadeFeatured = handmadeFeaturedProjectIds
+  .map(id => projects.find(project => project.id === id))
+  .filter(Boolean);
 </script>
 <template>
 <section class="hero page-width">
@@ -85,7 +87,7 @@ const handmadeFeatured = projects.filter(project => project.type === 'handmade')
 </section>
 <section class="featured page-width">
   <FeaturedCarousel :projects="webFeatured" eyebrow="SELECTED WEB WORKS" title="網頁精選" to="/web-projects" />
-  <FeaturedCarousel :projects="handmadeFeatured" eyebrow="SELECTED HANDMADE" title="手作精選" to="/handmade" />
+  <FeaturedCarousel :projects="handmadeFeatured" eyebrow="SELECTED HANDMADE · 3 CATEGORIES" title="手作精選" to="/handmade" />
 </section>
 <section id="contact" class="contact">
   <div class="contact-frame page-width">
