@@ -30,9 +30,9 @@ const closeMenu = () => {
     <RouterLink to="/handmade" @click="closeMenu">
       手作日常
     </RouterLink>
-    <a href="/#contact" @click="closeMenu">
-      聯絡我
-    </a>
+    <RouterLink to="/about" @click="closeMenu">
+      認識我
+    </RouterLink>
   </nav>
 </header>
 </template>
