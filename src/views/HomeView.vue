@@ -1,7 +1,7 @@
 <script setup>
 import FeaturedCarousel from '../components/FeaturedCarousel.vue';
 import { handmadeFeaturedProjectIds, projects } from '../data/projects';
-const webFeatured = projects.filter(project => project.type === 'web').slice(0, 6);
+const webFeatured = projects.filter(project => project.type === 'web' && !project.hidden).slice(0, 6);
 const handmadeFeatured = handmadeFeaturedProjectIds
   .map(id => projects.find(project => project.id === id))
   .filter(Boolean);

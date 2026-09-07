@@ -18,8 +18,8 @@ const handmadeCategory = ref(getHandmadeCategory(route.query.category));
 const crystalFlowerLevel = ref(handmadeCategory.value === 'crystal-flower' ? getCrystalFlowerLevel(route.query.level) : 'all');
 const leatherType = ref(handmadeCategory.value === 'leather' ? getLeatherType(route.query.leatherType) : 'all');
 const displayedProjects = computed(() => {
-  if (isWeb.value) return projects.filter(project => project.type === 'web');
-  return projects.filter(project => project.type === 'handmade' && project.category === handmadeCategory.value &&
+  if (isWeb.value) return projects.filter(project => project.type === 'web' && !project.hidden);
+  return projects.filter(project => !project.hidden && project.type === 'handmade' && project.category === handmadeCategory.value &&
     (handmadeCategory.value !== 'crystal-flower' || crystalFlowerLevel.value === 'all' || project.level === crystalFlowerLevel.value) &&
     (handmadeCategory.value !== 'leather' || leatherType.value === 'all' || project.tags.includes(leatherTypes.find(item => item.id === leatherType.value)?.tag)));
 });

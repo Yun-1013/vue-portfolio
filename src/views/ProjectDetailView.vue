@@ -11,7 +11,7 @@ const project = computed(() => findProject(props.id));
 const relatedProjects = computed(() => {
   if (!project.value) return [];
 
-  return projects.filter(candidate => candidate.type === project.value.type && (
+  return projects.filter(candidate => !candidate.hidden && candidate.type === project.value.type && (
     candidate.type === 'web' || (
       candidate.category === project.value.category &&
       (candidate.category !== 'crystal-flower' || !route.query.level || candidate.level === route.query.level) &&

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂房系統</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微軟正黑體";
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(247, 226, 181);
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 搜尋區 */
+
+        .search-box {
+            background: white;
+            box-shadow: 10px 10px 8px lightgray;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .search-box input,
+        .search-box select {
+            padding: 10px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* 房型卡片 */
+
+        .room-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .room-card {
+            background: white;
+            box-shadow: 10px 10px 5px rgb(243, 179, 154);
+            border-radius: 10px;
+            overflow: hidden;
+            /* box-shadow: 0 2px 8px rgba(0, 0, 0, .1); */
+        }
+
+        .room-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .room-info {
+            padding: 15px;
+        }
+
+        .room-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .room-info p {
+            margin-bottom: 8px;
+        }
+
+        .room-info button {
+            width: 100%;
+            padding: 10px;
+            background: #55a1f3;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: "微軟正黑體";
+            color: antiquewhite;
+        }
+
+        /* 訂單區 */
+
+        .order-box {
+            margin-top: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .order-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .order-detail {
+            line-height: 2;
+        }
+
+        .total {
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>飯店訂房系統</h1>
+
+        <!-- 搜尋區 -->
+
+        <div class="search-box">
+
+            <input type="date" id="checkIn">
+
+            <input type="date" id="checkOut">
+
+            <select id="guestCount">
+                <option value="1">1人</option>
+                <option value="2">2人</option>
+                <option value="3">3人</option>
+                <option value="4">4人</option>
+                <option value="5">5人</option>
+                <option value="6">6人</option>
+                <option value="7">7人</option>
+                <option value="8">8人</option>
+                <option value="9">9人</option>
+                <option value="10">10人</option>
+            </select>
+
+            <button id="searchBtn">
+                搜尋房型
+            </button>
+
+        </div>
+
+        <!-- 房型區 -->
+
+        <div class="room-list" id="roomList">
+
+        </div>
+
+        <!-- 訂單明細 -->
+
+        <div class="order-box">
+
+            <h2>訂單詳情</h2>
+
+            <div class="order-detail" id="orderDetail">
+                請選擇房型
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- <script src="app.js"></script> -->
+    <script>
+        const rooms = [
+            {
+                id: 1,
+                name: "獨享單人房",
+                price: 2800,
+                maxGuest: 1,
+                image: "https://picsum.photos/400/250?1"
+            },
+            {
+                id: 2,
+                name: "標準雙人房",
+                price: 3500,
+                maxGuest: 2,
+                image: "https://picsum.photos/400/250?2"
+            },
+            {
+                id: 3,
+                name: "豪華四人房",
+                price: 4800,
+                maxGuest: 4,
+                image: "https://picsum.photos/400/250?3"
+            },
+            {
+                id: 4,
+                name: "家庭六人房",
+                price: 5600,
+                maxGuest: 6,
+                image: "https://picsum.photos/400/250?4"
+            },
+            {
+                id: 5,
+                name: "我愛大通鋪",
+                price: 8888,
+                maxGuest: 10,
+                image: "https://picsum.photos/400/250?5"
+            },
+            {
+                id: 6,
+                name: "總統套房",
+                price: 88888,
+                maxGuest: 5,
+                image: "https://picsum.photos/400/250?6"
+            }
+        ];
+
+        const roomList = document.querySelector("#roomList");
+
+        function renderRooms(data) {
+
+            let html = "";
+
+            data.forEach(room => {
+
+                html += `
+        <div class="room-card">
+
+            <img src="${room.image}">
+
+            <div class="room-info">
+
+                <h3>${room.name}</h3>
+
+                <p>每晚 NT$ ${room.price}</p>
+
+                <p>最多入住 ${room.maxGuest} 人</p>
+
+                <button onclick="bookRoom(${room.id})">
+                    選擇房型
+                </button>
+
+            </div>
+
+        </div>
+        `;
+            });
+
+            roomList.innerHTML = html;
+        }
+
+        renderRooms(rooms);
+
+        const searchBtn = document.querySelector("#searchBtn");
+
+        searchBtn.addEventListener("click", () => {
+
+            const guest =
+                Number(document.querySelector("#guestCount").value);
+
+            const result = rooms.filter(room => {
+
+                return room.maxGuest >= guest;
+
+            });
+
+            renderRooms(result);
+
+        });
+
+        function checkDate() {
+
+            const checkIn =
+                document.querySelector("#checkIn").value;
+
+            const checkOut =
+                document.querySelector("#checkOut").value;
+
+            if (!checkIn || !checkOut) {
+
+                alert("請選擇日期");
+
+                return false;
+            }
+
+            if (checkOut <= checkIn) {
+
+                alert("退房日期必須晚於入住日期");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        function getDays(checkIn, checkOut) {
+
+            const start = new Date(checkIn);
+
+            const end = new Date(checkOut);
+
+            const diff =
+                end.getTime() - start.getTime();
+
+            return diff / (1000 * 60 * 60 * 24);
+        }
+
+        const orderDetail =
+            document.querySelector("#orderDetail");
+
+        function bookRoom(id) {
+
+            if (!checkDate()) {
+                return;
+            }
+
+            const room = rooms.find(room => {
+
+                return room.id === id;
+
+            });
+
+            const checkIn =
+                document.querySelector("#checkIn").value;
+
+            const checkOut =
+                document.querySelector("#checkOut").value;
+
+            const days =
+                getDays(checkIn, checkOut);
+
+            const total =
+                room.price * days;
+
+            orderDetail.innerHTML = `
+
+        <p>
+        房型：
+        ${room.name}
+        </p>
+
+        <p>
+        入住日期：
+        ${checkIn}
+        </p>
+
+        <p>
+        退房日期：
+        ${checkOut}
+        </p>
+
+        <p>
+        住宿天數：
+        ${days} 晚
+        </p>
+
+        <p>
+        每晚價格：
+        NT$ ${room.price}
+        </p>
+
+        <p class="total">
+        總價：
+        NT$ ${total}
+        </p>
+
+    `;
+        }
+    </script>
+</body>
+
+</html>
