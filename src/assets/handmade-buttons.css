@@ -301,8 +301,7 @@
 /* Web projects are presented as compact browser windows. */
 .card.web-card .image-wrap {
   position: relative;
-  display: flex;
-  align-items: stretch;
+  display: block;
   overflow: hidden !important;
   padding: 35px 7px 7px !important;
   border: 1px solid #d9d4ca;
@@ -338,8 +337,13 @@
   white-space: nowrap;
 }
 .card.web-card .image-wrap img {
+  width: 100% !important;
   height: 100% !important;
+  min-width: 0;
+  min-height: 0;
+  display: block;
   object-fit: cover;
+  object-position: center;
 }
 /* Draw the handmade filter divider one stitch at a time. */
 .filters::before {

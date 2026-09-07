@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>感冒再見診所叫號系統</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f9ff;
+            font-family: "微軟正黑體";
+            padding: 20px;
+        }
+
+        .clinic-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ffb7b9, #f5a792, #fad584);
+            padding: 20px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: antiquewhite;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        }
+        .waiting-list,
+        .finish-list {
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        .patient {
+            background: #e8f4ff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+        }
+
+        .current {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 16px;
+        }
+
+        .register-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        .next-btn {
+            background: #2196f3;
+            color: white;
+        }
+
+        .finish-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+
+        .title {
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        /* 統計區容器 */
+        .stat-container {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        /* 每個統計方塊 */
+        .stat-box {
+            flex: 1;
+            background: #e8f4ff;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .1);
+        }
+
+        /* 上方標題 */
+        .stat-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* 下方數字 */
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2196f3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="clinic-title">
+        感冒再見診所叫號系統 
+    </h1>
+
+    <div class="container">
+
+        <!-- 左上 -->
+        <div>
+            <div class="card">
+
+                <h2 class="title"> 目前看診中</h2>
+
+                <div class="current" id="currentPatient">
+
+                    尚未叫號
+
+                </div>
+
+                <button class="next-btn" id="nextBtn">
+                    叫下一位
+                </button>
+
+                <button class="finish-btn" id="finishBtn">
+                    看診完成
+                </button>
+
+            </div>
+        </div>
+        <!-- 右上 -->
+        <div>
+
+            <div class="card">
+
+                <h2 class="title"> 新增掛號</h2>
+
+                <input type="text" id="patientName" placeholder="請輸入病人稱呼">
+
+                <button class="register-btn" id="registerBtn">
+
+                    掛號
+
+                </button>
+
+            </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+
+            <h2 class="title"> 今日統計</h2>
+            <div class="stat-container">
+
+                <div class="stat-box">
+                    <div class="stat-title">等待中</div>
+                    <div class="stat-number" id="waitingCount">0</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-title">看診中</div>
+                    <div class="stat-number" id="currentCount">0</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-title">已完成</div>
+                    <div class="stat-number" id="finishCount">0</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card" style="margin-top:20px">
+
+            <h2 class="title"> 已完成看診</h2>
+
+            <div class="finish-list" id="finishList">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="card" style="margin-top:20px">
+
+        <h2 class="title"> 等待看診</h2>
+
+        <div class="waiting-list" id="waitingList">
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        let waitingPatients = [];
+
+        let finishedPatients = [];
+
+        let currentPatient = null;
+
+        let serialNumber = 1;
+
+        /* 取得時間 */
+        function getTime() {
+
+            return new Date().toLocaleTimeString(
+                "zh-TW",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                }
+            );
+        }
+
+        /* 補0 */
+        function pad(num) {
+
+            return String(num).padStart(3, "0");
+
+        }
+
+        /* 掛號 */
+        document
+            .getElementById("registerBtn")
+            .addEventListener("click", () => {
+
+                const name =
+                    document.getElementById("patientName")
+                        .value
+                        .trim();
+
+                if (name === "") {
+
+                    alert("請輸入病人稱呼");
+                    return;
+
+                }
+
+                const patient = {
+
+                    id: pad(serialNumber),
+                    name: name,
+                    time: getTime()
+
+                };
+
+                serialNumber++;
+
+                waitingPatients.push(patient);
+
+                document.getElementById("patientName").value = "";
+
+                render();
+
+            });
+
+        /* 叫下一位 */
+        document
+            .getElementById("nextBtn")
+            .addEventListener("click", () => {
+
+                if (currentPatient) {
+
+                    alert("目前已有病人看診中");
+                    return;
+
+                }
+
+                if (waitingPatients.length === 0) {
+
+                    alert("目前沒有等待病人");
+                    return;
+
+                }
+
+                currentPatient = waitingPatients.shift();
+
+                render();
+
+            });
+
+        /* 看診完成 */
+        document
+            .getElementById("finishBtn")
+            .addEventListener("click", () => {
+
+                if (!currentPatient) {
+
+                    alert("目前沒有病人看診");
+                    return;
+
+                }
+
+                finishedPatients.push(currentPatient);
+
+                currentPatient = null;
+
+                render();
+
+            });
+
+        /* 畫面渲染 */
+        function render() {
+
+            const waitingList =
+                document.getElementById("waitingList");
+
+            waitingList.innerHTML = "";
+
+            waitingPatients.forEach(patient => {
+
+                waitingList.innerHTML += `
+            <div class="patient">
+                <b>${patient.id}</b>
+                ${patient.name}
+                <br>
+                掛號時間：
+                ${patient.time}
+            </div>
+        `;
+
+            });
+
+            const currentBox =
+                document.getElementById("currentPatient");
+
+            if (currentPatient) {
+
+                currentBox.innerHTML = `
+            <h3>
+            ${currentPatient.id}
+            ${currentPatient.name}
+            </h3>
+
+            <p>
+            掛號時間：
+            ${currentPatient.time}
+            </p>
+        `;
+
+            } else {
+
+                currentBox.innerHTML =
+                    "尚未叫號";
+
+            }
+
+            const finishList =
+                document.getElementById("finishList");
+
+            finishList.innerHTML = "";
+
+            finishedPatients.forEach((patient, index) => {
+
+                finishList.innerHTML += `
+            <div class="patient">
+
+                完成序號：
+                ${pad(index + 1)}
+
+                <br>
+
+                病人：
+                ${patient.name}
+
+            </div>
+        `;
+
+            });
+
+            document.getElementById("waitingCount")
+                .textContent =
+                waitingPatients.length;
+
+            document.getElementById("currentCount")
+                .textContent =
+                currentPatient ? 1 : 0;
+
+            document.getElementById("finishCount")
+                .textContent =
+                finishedPatients.length;
+
+        }
+
+        render();
+
+    </script>
+
+</body>
+
+</html>

@@ -11,7 +11,7 @@ const project = computed(() => findProject(props.id));
 const relatedProjects = computed(() => {
   if (!project.value) return [];
 
-  return projects.filter(candidate => candidate.type === project.value.type && (
+  return projects.filter(candidate => !candidate.hidden && candidate.type === project.value.type && (
     candidate.type === 'web' || (
       candidate.category === project.value.category &&
       (candidate.category !== 'crystal-flower' || !route.query.level || candidate.level === route.query.level) &&
@@ -83,7 +83,15 @@ const backToListRoute = computed(() => {
       </span>
     </div>
   </div>
-  <DetailImageCarousel :images="project.images" :title="project.title" />
+  <section v-if="project.embedUrl" class="embedded-demo">
+    <iframe
+      :src="project.embedUrl"
+      :title="`${project.title} 互動展示`"
+      :style="{ height: `${project.embedHeight || 900}px` }"
+      loading="lazy"
+    />
+  </section>
+  <DetailImageCarousel v-else :images="project.images" :title="project.title" />
   <div class="info">
     <h2>
       作品介紹
@@ -103,13 +111,18 @@ const backToListRoute = computed(() => {
         學習重點
       </b>
       <br>
-      從版面規劃、元件切分到響應式設計，練習讓網站同時兼顧美感與使用體驗。
+      {{ project.learningFocus || '從版面規劃、元件切分到響應式設計，練習讓網站同時兼顧美感與使用體驗。' }}
+    </p>
+    <p v-if="project.collaboration" class="collaboration">
+      <b>{{ project.collaboration.label }}</b>
+      <br>
+      個人分工：{{ project.collaboration.role }}
     </p>
   <div v-if="project.type === 'web'" class="links">
       <a :href="project.demoUrl" target="_blank">
         查看網站 ↗
       </a>
-      <a :href="project.githubUrl" target="_blank">
+      <a v-if="project.githubUrl && project.githubUrl !== '#'" :href="project.githubUrl" target="_blank">
         GitHub ↗
       </a>
     </div>
@@ -178,6 +191,23 @@ h1 {
 .info {
   max-width: 600px;
   margin: clamp(36px,5vw,56px) auto 0;
+}
+.embedded-demo {
+  width: 100%;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+}
+.embedded-demo iframe {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+}
+.collaboration {
+  padding: 14px 16px;
+  border-left: 3px solid var(--terracotta);
+  background: var(--sand);
 }
 .info h2 {
   font-family: var(--serif);
@@ -300,6 +330,9 @@ h1 {
   .detail,.not-found {
     width: calc(100% - 40px);
     padding: 35px 0 80px;
+  }
+  .embedded-demo iframe {
+    min-height: 680px;
   }
   .title {
     display: block;

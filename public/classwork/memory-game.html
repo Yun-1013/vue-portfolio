@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻牌配對小遊戲</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微軟正黑體";
+        }
+
+        body {
+            background: #e8d7dc;
+            min-height: 100vh;
+        }
+
+        /* 導覽列 */
+        .navbar {
+            background: #8fa3b3;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(0,0,0,.15);
+        }
+
+        /* 資訊區 */
+        .info-bar {
+            background: #8fa3b3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            text-align: center;
+            color: white;
+        }
+
+        .number {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 16px;
+        }
+
+        button {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #f5f5f5;
+        }
+
+        /* 遊戲區 */
+        .game-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* 卡牌 */
+        .card {
+            width: 100%;
+            height: 130px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        .card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 55px;
+
+            backface-visibility: hidden;
+        }
+
+        /* 背面 */
+        .card-back {
+            background: #c5b6c9;
+            color: white;
+        }
+
+        /* 正面 */
+        .card-front {
+            background: #d7c0cc;
+            transform: rotateY(180deg);
+        }
+
+        .matched .card-front {
+            background: #a9c4a6;
+        }
+
+        .win-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 28px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        @media(max-width:768px){
+            .game-container{
+                grid-template-columns: repeat(4,1fr);
+            }
+
+            .card{
+                height:90px;
+            }
+
+            .card-face{
+                font-size:40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 標題 -->
+    <div class="navbar">
+        翻牌配對小遊戲
+    </div>
+
+    <!-- 資訊列 -->
+    <div class="info-bar">
+
+        <div class="info-item">
+            <div id="moves" class="number">0</div>
+            <div class="label">翻牌次數</div>
+        </div>
+
+        <div class="info-item">
+            <div id="matched" class="number">0</div>
+            <div class="label">已配對組數</div>
+        </div>
+
+        <div class="info-item">
+            <div id="remain" class="number">8</div>
+            <div class="label">剩餘組數</div>
+        </div>
+
+        <button id="restartBtn">
+            重新開始
+        </button>
+
+    </div>
+
+    <!-- 卡牌區 -->
+    <div class="game-container" id="gameBoard"></div>
+
+    <div class="win-message" id="winMessage"></div>
+
+    <script>
+
+        const animals = [
+            "🐶",
+            "🐱",
+            "🐰",
+            "🦊",
+            "🐼",
+            "🐸",
+            "🐨",
+            "🦁"
+        ];
+
+        const gameBoard = document.getElementById("gameBoard");
+        const movesEl = document.getElementById("moves");
+        const matchedEl = document.getElementById("matched");
+        const remainEl = document.getElementById("remain");
+        const restartBtn = document.getElementById("restartBtn");
+        const winMessage = document.getElementById("winMessage");
+
+        let firstCard = null;
+        let secondCard = null;
+
+        let lockBoard = false;
+
+        let moves = 0;
+        let matchedPairs = 0;
+
+        initGame();
+
+        restartBtn.addEventListener("click", initGame);
+
+        function initGame() {
+
+            gameBoard.innerHTML = "";
+            winMessage.textContent = "";
+
+            moves = 0;
+            matchedPairs = 0;
+
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+
+            updateInfo();
+
+            let cardData = [...animals, ...animals];
+
+            shuffle(cardData);
+
+            cardData.forEach(animal => {
+
+                const card = document.createElement("div");
+
+                card.classList.add("card");
+
+                card.dataset.animal = animal;
+
+                card.innerHTML = `
+                    <div class="card-face card-back">
+                        ✦
+                    </div>
+
+                    <div class="card-face card-front">
+                        ${animal}
+                    </div>
+                `;
+
+                card.addEventListener("click", flipCard);
+
+                gameBoard.appendChild(card);
+
+            });
+
+        }
+
+        function flipCard() {
+
+            if (lockBoard) return;
+
+            if (this === firstCard) return;
+
+            if (this.classList.contains("matched")) return;
+
+            this.classList.add("flip");
+
+            if (!firstCard) {
+
+                firstCard = this;
+                return;
+
+            }
+
+            secondCard = this;
+
+            moves++;
+
+            updateInfo();
+
+            checkMatch();
+        }
+
+        function checkMatch() {
+
+            const isMatch =
+                firstCard.dataset.animal ===
+                secondCard.dataset.animal;
+
+            if (isMatch) {
+
+                firstCard.classList.add("matched");
+                secondCard.classList.add("matched");
+
+                matchedPairs++;
+
+                updateInfo();
+
+                resetTurn();
+
+                if (matchedPairs === 8) {
+
+                    winMessage.textContent =
+                        "🎉 恭喜完成所有配對！";
+
+                }
+
+            } else {
+
+                lockBoard = true;
+
+                setTimeout(() => {
+
+                    firstCard.classList.remove("flip");
+                    secondCard.classList.remove("flip");
+
+                    resetTurn();
+
+                }, 800);
+
+            }
+
+        }
+
+        function resetTurn() {
+
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+
+        }
+
+        function updateInfo() {
+
+            movesEl.textContent = moves;
+            matchedEl.textContent = matchedPairs;
+            remainEl.textContent = 8 - matchedPairs;
+
+        }
+
+        function shuffle(array) {
+
+            for (
+                let i = array.length - 1;
+                i > 0;
+                i--
+            ) {
+
+                const j = Math.floor(
+                    Math.random() * (i + 1)
+                );
+
+                [array[i], array[j]] =
+                [array[j], array[i]];
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

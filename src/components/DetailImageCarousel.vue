@@ -64,6 +64,10 @@ const endSwipe = event => {
           :src="images[currentIndex]"
           :alt="`${title}－作品圖 ${currentIndex + 1}`"
         >
+        <p v-else class="empty-gallery">
+          這是一件可直接操作的網頁作品<br>
+          請由下方按鈕開啟完整展示。
+        </p>
       </div>
 
       <button
@@ -137,6 +141,14 @@ const endSwipe = event => {
   max-height: 100%;
   object-fit: contain;
   animation: image-in .22s ease-out;
+}
+.empty-gallery {
+  margin: 0;
+  padding: 2rem;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  line-height: 1.8;
+  text-align: center;
 }
 .arrow {
   position: static;

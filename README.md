@@ -1,38 +1,20 @@
-# vue-portfolio
+# 留光 · LUMEN 作品集
 
-This template should help get you started developing with Vue 3 in Vite.
+以 Vue 3 與 Vite 製作的個人作品集，收錄前端作品、手作作品與個人履歷介紹。
 
-## Recommended IDE Setup
+完整的架構、內容更新、圖片管理、執行、部署與除錯方式，請閱讀：
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- [網站維護指南](docs/網站維護指南.md)
+- [作品圖片管理筆記](docs/作品圖片管理筆記.md)
+- [作品分類導覽筆記](docs/作品分類導覽筆記.md)
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## 常用指令
 
 ```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+npm ci
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
 npm run build
+npm run preview
 ```
+
+請使用 Node.js 22.18.0 以上的相容版本；正式部署前務必執行 `npm run build`。

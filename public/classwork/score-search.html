@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找尋分數作業</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "微軟正黑體";
+            font-size: 20px;
+
+        }
+
+        h1 {
+            background-color: blanchedalmond;
+            text-align: center;
+            font-size: 48px;
+            border: 5px dotted white;
+            box-shadow: 5px 5px 5px 5px lightsalmon;
+        }
+
+        #cards {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 150px;
+            padding: 8px;
+            margin: 15px;
+            border-radius: 20px;
+            background-color: antiquewhite;
+            border: 5px dotted white;
+            box-shadow: 10px 10px 5px 5px lightsalmon;
+
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <h1>成績單</h1>
+        <div id="cards"></div>
+
+        </div>
+    </section>
+    <script>
+        let randomData = [
+            { id: 1, "name": "黃俊傑", "gender": "男", "region": "屏東縣", "score": 8 },
+            { id: 2, "name": "陳雅婷", "gender": "女", "region": "台北市", "score": 92 },
+            { id: 3, "name": "張美玲", "gender": "女", "region": "南投縣", "score": 45 },
+            { id: 4, "name": "林冠宇", "gender": "男", "region": "高雄市", "score": 100 },
+            { id: 5, "name": "李佳穎", "gender": "女", "region": "新北市", "score": 61 },
+            { id: 6, "name": "劉志豪", "gender": "男", "region": "台中市", "score": 23 },
+            { id: 7, "name": "蔡佩珊", "gender": "女", "region": "彰化縣", "score": 79 },
+            { id: 8, "name": "楊承翰", "gender": "男", "region": "桃園市", "score": 54 },
+            { id: 9, "name": "鄭詩涵", "gender": "女", "region": "基隆市", "score": 14 },
+            { id: 10, "name": "謝哲宇", "gender": "男", "region": "台南市", "score": 88 },
+            { id: 11, "name": "洪怡君", "gender": "女", "region": "花蓮縣", "score": 37 },
+            { id: 12, "name": "郭建宏", "gender": "男", "region": "新竹市", "score": 0 },
+            { id: 13, "name": "曾妤蓁", "gender": "女", "region": "苗栗縣", "score": 73 },
+            { id: 14, "name": "廖家豪", "gender": "男", "region": "嘉義市", "score": 95 },
+            { id: 15, "name": "賴鈺婷", "gender": "女", "region": "雲林縣", "score": 42 },
+            { id: 16, "name": "徐冠廷", "gender": "男", "region": "宜蘭縣", "score": 81 },
+            { id: 17, "name": "周欣妤", "gender": "女", "region": "台東縣", "score": 50 },
+            { id: 18, "name": "葉柏翰", "gender": "男", "region": "台北市", "score": 66 },
+            { id: 19, "name": "莊子晴", "gender": "女", "region": "高雄市", "score": 19 },
+            { id: 20, "name": "何宇軒", "gender": "男", "region": "新北市", "score": 87 },
+            { id: 21, "name": "許佳蓉", "gender": "女", "region": "台中市", "score": 31 },
+            { id: 22, "name": "蕭家銘", "gender": "男", "region": "桃園市", "score": 70 },
+            { id: 23, "name": "羅雅涵", "gender": "女", "region": "台南市", "score": 58 },
+            { id: 24, "name": "蘇建宇", "gender": "男", "region": "新竹縣", "score": 93 },
+            { id: 25, "name": "彭莉婷", "gender": "女", "region": "屏東縣", "score": 6 },
+            { id: 26, "name": "陳智傑", "gender": "男", "region": "嘉義縣", "score": 74 },
+            { id: 27, "name": "林品妤", "gender": "女", "region": "彰化縣", "score": 49 },
+            { id: 28, "name": "黃威廷", "gender": "男", "region": "南投縣", "score": 83 },
+            { id: 29, "name": "張佳玲", "gender": "女", "region": "台中市", "score": 25 },
+            { id: 30, "name": "李廷宇", "gender": "男", "region": "台北市", "score": 91 },
+            { id: 31, "name": "劉美惠", "gender": "女", "region": "高雄市", "score": 52 },
+            { id: 32, "name": "蔡翰霖", "gender": "男", "region": "新北市", "score": 12 },
+            { id: 33, "name": "楊妤瑄", "gender": "女", "region": "基隆市", "score": 68 },
+            { id: 34, "name": "鄭柏宇", "gender": "男", "region": "桃園市", "score": 77 },
+            { id: 35, "name": "謝詩婷", "gender": "女", "region": "台南市", "score": 37 },
+            { id: 36, "name": "洪家駿", "gender": "男", "region": "花蓮縣", "score": 99 },
+            { id: 37, "name": "郭詠晴", "gender": "女", "region": "新竹市", "score": 43 },
+            { id: 38, "name": "邱冠霖", "gender": "男", "region": "宜蘭縣", "score": 85 },
+            { id: 39, "name": "曾雅雯", "gender": "女", "region": "苗栗縣", "score": 21 },
+            { id: 40, "name": "廖子軒", "gender": "男", "region": "雲林縣", "score": 60 },
+            { id: 41, "name": "賴芯妤", "gender": "女", "region": "台東縣", "score": 76 },
+            { id: 42, "name": "徐哲維", "gender": "男", "region": "嘉義市", "score": 5 },
+            { id: 43, "name": "周淑娟", "gender": "女", "region": "新竹縣", "score": 89 },
+            { id: 44, "name": "葉冠宏", "gender": "男", "region": "高雄市", "score": 34 },
+            { id: 45, "name": "莊怡婷", "gender": "女", "region": "台北市", "score": 94 },
+            { id: 46, "name": "何宗翰", "gender": "男", "region": "新北市", "score": 40 },
+            { id: 47, "name": "王宇婷", "gender": "女", "region": "台中市", "score": 82 },
+            { id: 48, "name": "劉俊宇", "gender": "男", "region": "桃園市", "score": 57 },
+            { id: 49, "name": "陳淑芬", "gender": "女", "region": "台南市", "score": 18 },
+            { id: 50, "name": "林建文", "gender": "男", "region": "彰化縣", "score": 65 }
+        ];
+        // 要顯示名稱、性別、地區、分數
+        let cards = document.querySelector("#cards");
+        randomData.forEach((item) => {
+            // 整合在一起
+            console.log(item.name, item.gender, item.region, item.score);
+            // 分開一個一個寫
+            // console.log(item);
+            // console.log(item.name);
+            // console.log(item.gender);
+            // console.log(item.region);
+            // console.log(item.score);
+
+            // 如果成績大於等於60分
+            if (item.score >= 60) {
+                cards.innerHTML += `
+                <div class="card">
+                  
+                    <div>姓名:${item.name}</div>
+                   
+                    <div>性別:${item.gender}</div>
+                    
+                    <div>地區:${item.region}</div>
+                    
+                    <div>成績:${item.score}分</div>
+                    恭喜及格!!
+                </div>
+            `;
+            };
+        });
+    </script>
+</body>
+
+</html>
