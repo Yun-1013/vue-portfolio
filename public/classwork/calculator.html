@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡易計算機</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: noto sans tc;
+            font-size: 24px;
+            text-align: center;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        input {
+            display: flex;
+            gap: 10px;
+            font-size: 24px;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        button {
+            border-radius: 99px;
+            font-size: 20px;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        output {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        第一個數字:
+        <input type="number" v-model.number="num1">
+        第二個數字:
+        <input type="number" v-model.number="num2">
+        <br>
+        <div>
+            <button type="button" @click="add">+</button>
+            <button type="button" @click="subtraction">-</button>
+            <button type="button" @click="multiply">*</button>
+            <button type="button" @click="division">/</button>
+        </div>
+        <br>
+        <output>Ans:{{ result }}</output>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const num1 = ref(0)
+                const num2 = ref(0)
+                const result = ref(0)
+
+                function add() {
+                    result.value = num1.value + num2.value
+                }
+                function subtraction() {
+                    result.value = num1.value - num2.value
+                }
+                function multiply() {
+                    result.value = num1.value * num2.value
+                }
+                function division() {
+                    result.value = num1.value / num2.value
+                }
+
+
+                return {
+                    num1,
+                    num2,
+                    result,
+                    add,
+                    subtraction,
+                    multiply,
+                    division,
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

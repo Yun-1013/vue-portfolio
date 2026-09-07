@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>會員小卡產生器</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "LINE Seed JP", "Microsoft JhengHei" ;
+            background: transparent;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #app {
+            background: transparent;
+            border-radius: 20px;
+            display: flex;
+            padding: 30px;
+            gap: 40px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .form-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 28px 32px;
+            width: 300px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-box h1 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .field input[type="text"],
+        .field input[type="number"] {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .radio-group label,
+        .checkbox-group label {
+            font-weight: normal;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 16px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 300px;
+            height: 190px;
+            border-radius: 20px;
+            padding: 22px;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card.normal {
+            background: #dceeff;
+            border: 4px solid #1e5fbf;
+        }
+
+        .card.vip {
+            background: #fff6d5;
+            border: 4px solid #d4af37;
+            box-shadow: inset 0 0 10px rgba(250, 250, 41, 0.959);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-title {
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #666;
+        }
+
+        .badge {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            color: #fff;
+        }
+
+        .card.normal .badge {
+            background: #1e5fbf;
+        }
+
+        .card.vip .badge {
+            background: #d4af37;
+        }
+
+        .stars {
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #f5a623;
+        }
+
+        .stars .empty {
+            color: #d8d8d8;
+        }
+
+        .card-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .card-detail {
+            font-size: 13px;
+            color: #555;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+
+        <div class="form-box">
+            <h1>填寫會員資料</h1>
+
+            <div class="field">
+                <label for="name">姓名</label>
+                <input id="name" type="text" v-model="name" placeholder="請輸入姓名">
+            </div>
+
+            <div class="field">
+                <label for="age">年齡</label>
+                <input id="age" type="number" v-model.number="age" placeholder="請輸入年齡">
+            </div>
+
+            <div class="field radio-group">
+                <label>會員身分</label>
+                <br>
+                <label>
+                    <input type="radio" id="normal" value="normal" v-model="memberType"> 一般會員
+                </label>
+                <label>
+                    <input type="radio" id="vip" value="vip" v-model="memberType"> VIP會員
+                </label>
+            </div>
+
+            <div class="field checkbox-group">
+                <label for="showDetail">
+                    <input type="checkbox" id="showDetail" v-model="showDetail"> 顯示詳細資料
+                </label>
+            </div>
+        </div>
+
+        <div class="card" :class="memberType">
+            <div class="card-top">
+                <span class="card-title">MEMBER CARD</span>
+                <span class="badge">{{ memberType === 'vip' ? 'VIP' : '一般會員' }}</span>
+            </div>
+
+            <div class="stars">
+                <span v-for="n in 5" :key="n" :class="{ empty: n > starCount }">★</span>
+            </div>
+
+            <div>
+                <div class="card-name">{{ name || '未填寫姓名' }}</div>
+                <div class="card-detail" v-if="showDetail">
+                    年齡：{{ age || '未填寫' }} 歲<br>
+                    身分：{{ memberType === 'vip' ? 'VIP會員' : '一般會員' }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue;
+
+        createApp({
+            setup() {
+                const name = ref('');
+                const age = ref('');
+                const memberType = ref('normal'); 
+                const showDetail = ref(true);
+
+                const starCount = computed(() => memberType.value === 'vip' ? 5 : 1);
+
+                return {
+                    name,
+                    age,
+                    memberType,
+                    showDetail,
+                    starCount,
+                };
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+
+</html>

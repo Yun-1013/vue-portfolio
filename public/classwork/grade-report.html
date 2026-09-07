@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成績單作業</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px 20px;
+            display: grid;
+            place-items: center;
+        }
+        .box {
+            background-color: antiquewhite;
+            width: 300px;
+            max-width: 100%;
+            height: 900px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px;
+            gap: 8px;
+            font-size: 32px;
+        }
+       
+        .input{
+            width: 150px;
+            height: 90px;
+            text-align: center;
+            font-size: 20px;
+            
+
+        }
+        #btn{
+            background-color: lightsalmon;
+            width: 130px;
+            height: 70px;
+            font-size:larger;
+
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h3>成績計算</h3>
+        國文成績
+        <input id="chinese" class="input"  type="text" value="" placeholder="請輸入成績">
+        <div>+</div>
+        數學成績
+        <input id="math" class="input" type="text" value="" placeholder="請輸入成績">
+        <div>+</div>
+        英文成績
+        <input id="english" class="input" type="text" value="" placeholder="請輸入成績">
+        <div>=</div>
+        <div id="answer">平均成績</div>
+        <!-- <br><br><br> -->
+        <button id="btn" type="button">平均</button>
+        
+    </div>
+<script>
+    document.querySelector('#btn').addEventListener('click',function(){
+        document.querySelector('#answer').textContent=
+        (parseInt(document.querySelector('#chinese').value)+
+        parseInt(document.querySelector('#math').value)+
+        parseInt(document.querySelector('#english').value))/3
+    })
+</script>
+</body>
+
+</html>

@@ -15,6 +15,73 @@ const getLocalImage = imagePath => {
   return image;
 };
 
+// public/classwork 內的檔案會由 Vite 原樣部署，適合保留課堂作業原本的互動。
+const classworkBase = `${import.meta.env.BASE_URL}classwork/`;
+
+const classworkProjects = [{
+  id: 'waterpark-team-project', type: 'web', title: '水上樂園｜互動導覽網站', year: '2026',
+  description: '團隊課程情境提案，整合園區導覽地圖、景點分類、活動與公告資訊，協助旅客規劃參觀。',
+  imagePaths: ['web/waterpark-01-1.png'],
+  tags: ['團隊專案', 'RWD', 'JavaScript', '互動地圖'], demoUrl: 'https://fcu-11504-waterpark.dev-hub.io/',
+  learningFocus: '資訊架構、互動導覽與響應式網站協作。',
+  collaboration: { label: '團隊課程專案', role: '個人負責內容待補' }
+}, {
+  id: 'classwork-clinic-queue', type: 'web', title: '診所叫號系統', year: '2026',
+  description: '模擬掛號、叫號與完成看診流程，並即時統計各種看診狀態。',
+  imagePaths: ['web/clinic-queue-01-1.png'],
+  tags: ['HTML', 'CSS', 'JavaScript'], demoUrl: `${classworkBase}clinic-queue.html`,
+  embedUrl: `${classworkBase}clinic-queue.html`, embedHeight: 1100,
+  learningFocus: 'DOM 操作、狀態更新與資料渲染。'
+}, {
+  id: 'classwork-work-gallery', type: 'web', title: '我的作品展示館', year: '2026',
+  description: '可新增、編輯、篩選與輪播作品的個人收藏展示介面。',
+  tags: ['Vue', 'Tailwind CSS', 'Swiper'], demoUrl: `${classworkBase}work-gallery.html`,
+  embedUrl: `${classworkBase}work-gallery.html`, embedHeight: 1280,
+  learningFocus: 'Vue 資料綁定、表單互動、localStorage 與輪播元件。'
+}, {
+  id: 'classwork-rock-paper-scissors', type: 'web', title: '剪刀石頭布', year: '2026',
+  description: '玩家與電腦對戰的互動小遊戲，搭配圖像呈現每回合結果。',
+  tags: ['JavaScript', 'DOM', '互動遊戲'], demoUrl: `${classworkBase}rock-paper-scissors/index.html`,
+  embedUrl: `${classworkBase}rock-paper-scissors/index.html`, embedHeight: 760,
+  learningFocus: '事件監聽、隨機邏輯與條件判斷。'
+}, {
+  id: 'classwork-member-card', type: 'web', title: '會員小卡產生器', year: '2026',
+  description: '輸入會員資料後，即時產生不同等級與樣式的會員卡。',
+  tags: ['Vue', '表單互動'], demoUrl: `${classworkBase}member-card.html`,
+  embedUrl: `${classworkBase}member-card.html`, embedHeight: 900,
+  learningFocus: 'Vue 雙向綁定與即時視覺預覽。'
+}, {
+  id: 'classwork-score-search', type: 'web', title: '找尋分數作業', year: '2026',
+  description: '以成績資料進行查詢與結果呈現的練習。',
+  tags: ['JavaScript', '資料處理'], demoUrl: `${classworkBase}score-search.html`,
+  embedUrl: `${classworkBase}score-search.html`, embedHeight: 880,
+  learningFocus: '陣列資料、查詢流程與條件判斷。'
+}, {
+  id: 'classwork-grade-report', type: 'web', title: '成績單作業', year: '2026',
+  description: '輸入國文、數學與英文分數後，產生計算結果。',
+  tags: ['JavaScript', '表單處理'], demoUrl: `${classworkBase}grade-report.html`,
+  embedUrl: `${classworkBase}grade-report.html`, embedHeight: 720,
+  learningFocus: '輸入驗證、數值計算與事件處理。'
+}, {
+  id: 'classwork-calculator', type: 'web', title: '簡易計算機', year: '2026',
+  description: '提供加、減、乘、除四則運算的基礎互動練習。',
+  tags: ['Vue', 'JavaScript'], demoUrl: `${classworkBase}calculator.html`,
+  embedUrl: `${classworkBase}calculator.html`, embedHeight: 700,
+  learningFocus: '函式拆分與表單運算。'
+}, {
+  id: 'classwork-pacman-coin', type: 'web', title: '小精靈吃金幣', year: '2026',
+  description: '以純 CSS 關鍵影格製作小精靈移動與吃金幣的動畫。',
+  tags: ['CSS Animation', 'Keyframes'], demoUrl: `${classworkBase}pacman-coin.html`,
+  embedUrl: `${classworkBase}pacman-coin.html`, embedHeight: 620,
+  learningFocus: 'CSS 造型與多段關鍵影格動畫。'
+}, {
+  id: 'classwork-loading-animation', type: 'web', title: '狗追貓 Loading 動畫', year: '2026',
+  description: '運用 SASS 與 CSS 動畫製作具情境感的載入畫面。',
+  tags: ['SASS', 'CSS Animation'], demoUrl: `${classworkBase}loading-animation/index.html`,
+  embedUrl: `${classworkBase}loading-animation/index.html`, embedHeight: 520,
+  learningFocus: 'SASS 結構與循環動畫設計。'
+}];
+
 const crystalFlowerLevelLabels = {
   junior: '初級',
   senior: '中級',
@@ -157,37 +224,7 @@ const crystalFlowerProjects = crystalFlowerDrafts.map(project => ({
   tags: ['水晶花', crystalFlowerLevelLabels[project.level]]
 }));
 
-export const projects = [{
-  id: 'cafe-landing',
-  type: 'web',
-  title: '午後咖啡店',
-  year: '2026',
-  cover: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=85',
-  description: '以溫暖色調打造的咖啡店品牌首頁，練習響應式版面與細節動畫。',
-  tags: ['HTML', 'CSS', 'RWD'],
-  demoUrl: '#',
-  githubUrl: '#'
-}, {
-  id: 'weather-dashboard',
-  type: 'web',
-  title: '晴雨之間',
-  year: '2026',
-  cover: 'https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=1000&q=85',
-  description: '整合天氣資料的視覺化儀表板，依照不同天氣切換畫面情緒。',
-  tags: ['Vue', 'JavaScript', 'API'],
-  demoUrl: '#',
-  githubUrl: '#'
-}, {
-  id: 'plant-shop',
-  type: 'web',
-  title: '綠意選物',
-  year: '2025',
-  cover: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=1000&q=85',
-  description: '植物選物品牌的購物介面提案，著重產品資訊與留白層次。',
-  tags: ['Vue', 'UI Design', 'CSS'],
-  demoUrl: '#',
-  githubUrl: '#'
-}, ...crystalFlowerProjects, {
+export const projects = [...classworkProjects, ...crystalFlowerProjects, {
   id: 'leather-01',
   type: 'handmade',
   category: 'leather',
